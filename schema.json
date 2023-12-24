@@ -5,7 +5,7 @@
     "name": "bb-component-SuperFieldBoolean",
     "friendlyName": "Super Field - Boolean",
     "description": "A Boolean Input Field component for Budibase",
-    "icon": "Text",
+    "icon": "Boolean",
     "settings": [
       {
         "type": "field/boolean",
@@ -87,6 +87,21 @@
             "label": "Switches",
             "value": "switch"
           }
+        ]
+      },
+      {
+        "type" : "icon",
+        "key" : "icon",
+        "label" : "Icon"
+      },
+      {
+        "type" : "select",
+        "key" : "iconPosition",
+        "label" : "Icon Position",
+        "dependsOn" : "icon",
+        "options" : [
+          { "label" : "Inline", "value" : "inline" },
+          { "label" : "In Label", "value" : "inlabel" }
         ]
       },
       {

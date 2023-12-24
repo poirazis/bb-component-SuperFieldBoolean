@@ -33,7 +33,8 @@
   export let disabled
   export let readonly
 
-  export let frontIcon
+  export let icon
+  export let iconPosition
 
   let formField;
   let formStep;
@@ -162,7 +163,8 @@
         defaultValue,
         controlType,
         role: "formInput", 
-        iconFront: frontIcon,
+        iconFront: icon,
+        iconPosition,
         }}
       {value}
       {fieldSchema}
