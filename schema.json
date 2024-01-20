@@ -6,6 +6,18 @@
     "friendlyName": "Super Field - Boolean",
     "description": "A Boolean Input Field component for Budibase",
     "icon": "Boolean",
+    "context": [
+      {
+        "type": "static",
+        "values": [
+          {
+            "label": "Value",
+            "key": "value",
+            "type": "boolean"
+          }
+        ]
+      }
+    ],
     "settings": [
       {
         "type": "field/boolean",
@@ -20,12 +32,6 @@
       },
       {
         "type": "text",
-        "label": "Placeholder",
-        "key": "placeholder",
-        "placeholder": "Choose an option"
-      },
-      {
-        "type": "text",
         "label": "Default value",
         "key": "defaultValue",
         "supportsConditions": false
@@ -34,6 +40,13 @@
         "type": "text",
         "label": "Help text",
         "key": "helpText"
+      },
+      {
+        "type": "text",
+        "label": "Formatted value",
+        "key": "template",
+        "placeholder" : "{{ Value }}",
+        "nested" : true
       },
       {
         "type": "validation/boolean",
@@ -48,6 +61,22 @@
           {
             "label": "Field Value",
             "key": "value"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "label": "Control Type",
+        "key": "controlType",
+        "defaultValue": "switch",
+        "options": [
+          {
+            "label": "Checkbox",
+            "value": "checkbox"
+          },
+          {
+            "label": "Switch",
+            "value": "switch"
           }
         ]
       },
@@ -69,43 +98,19 @@
         }
       },
       {
-        "type": "select",
-        "label": "Type",
-        "key": "controlType",
-        "defaultValue": "select",
-        "placeholder": "Pick an options type",
-        "options": [
-          {
-            "label": "Select",
-            "value": "select"
-          },
-          {
-            "label": "Checkboxes",
-            "value": "checkbox"
-          },
-          {
-            "label": "Switches",
-            "value": "switch"
-          }
-        ]
+        "type" : "boolean",
+        "key"  : "showIcon",
+        "label": "Add Inline Icon"
       },
       {
         "type" : "icon",
-        "key" : "icon",
-        "label" : "Icon"
+        "key"  : "icon",
+        "label": "Icon",
+        "resetOn" : "showIcon",
+        "dependsOn" : "showIcon"
       },
       {
-        "type" : "select",
-        "key" : "iconPosition",
-        "label" : "Icon Position",
-        "dependsOn" : "icon",
-        "options" : [
-          { "label" : "Inline", "value" : "inline" },
-          { "label" : "In Label", "value" : "inlabel" }
-        ]
-      },
-      {
-        "tag" : "style",
+        "tag": "style",
         "type": "select",
         "label": "Layout",
         "key": "span",
