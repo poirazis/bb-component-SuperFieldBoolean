@@ -1,7 +1,7 @@
 <script>
   import { getContext , onDestroy} from "svelte";
-  import CellBoolean from "../../bb_super_components_shared/src/lib/SuperCell/cells/CellBoolean.svelte";
-
+  import CellBoolean from "../../bb_super_components_shared/src/lib/SuperTableCells/CellBoolean.svelte";
+  
   const { styleable } = getContext("sdk");
   const component = getContext("component");
 
