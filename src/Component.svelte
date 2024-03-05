@@ -8,6 +8,7 @@
   const formContext = getContext("form");
   const formStepContext = getContext("form-step");
   const labelPos = getContext("field-group");
+  const groupDisabled = getContext("field-group-disabled");
   const labelWidth = getContext("field-group-label-width");
   const formApi = formContext?.formApi;
 
@@ -58,7 +59,7 @@
 
   $: cellOptions = { 
       defaultValue,
-      disabled,
+      disabled: disabled || groupDisabled,
       template,
       readonly: readonly || disabled,
       icon,
@@ -72,7 +73,7 @@
     normal: {
       ...$component.styles.normal,
       "flex-direction": labelPos == "left" ? "row" : "column",
-      gap: labelPos == "left" ? "0.85rem" : "0rem",
+      gap: labelPos == "left" ? "0.5rem" : "0rem",
       "grid-column": labelPos ? "span " + span : null,
       "--label-width":
         labelPos == "left" ? (labelWidth ? labelWidth : "6rem") : "auto",
@@ -101,9 +102,20 @@
   tabindex="0"
   use:styleable={$component.styles}  
 >
-  <label for="superCell" class="superlabel" class:bound={formContext}>
-    {label}
+  {#if label}
+  <label for="superCell"
+    class="superlabel"
+    style:flex-direction={labelPos == "left" ? "column" : "row"}
+
+  >
+    {label} 
+    {#if fieldState.error}
+      <div class="error">
+        <span>{fieldState.error}</span>
+      </div>
+    {/if}
   </label>
+  {/if}
   
   <div class="inline-cells">
     <CellBoolean
