@@ -63,6 +63,7 @@
     template,
     readonly: readonly || fieldState?.readonly,
     icon,
+    padding: "0.5rem",
     align: "flex-start",
     role: "formInput",
   };
