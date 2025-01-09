@@ -23,12 +23,13 @@
         "type": "field/boolean",
         "label": "Field",
         "key": "field",
-        "required": true
+        "defaultValue": "Super Boolean Field"
       },
       {
         "type": "text",
         "label": "Label",
-        "key": "label"
+        "key": "label",
+        "defaultValue": "Super Boolean Field"
       },
       {
         "type": "text",
@@ -45,8 +46,8 @@
         "type": "text",
         "label": "Formatted value",
         "key": "template",
-        "placeholder" : "{{ Value }}",
-        "nested" : true
+        "placeholder": "{{ Value }}",
+        "nested": true
       },
       {
         "type": "validation/boolean",
@@ -98,16 +99,68 @@
         }
       },
       {
-        "type" : "boolean",
-        "key"  : "showIcon",
+        "type": "boolean",
+        "key": "showIcon",
         "label": "Add Inline Icon"
       },
       {
-        "type" : "icon",
-        "key"  : "icon",
+        "type": "icon",
+        "key": "icon",
         "label": "Icon",
-        "resetOn" : "showIcon",
-        "dependsOn" : "showIcon"
+        "resetOn": "showIcon",
+        "dependsOn": "showIcon"
+      },
+      {
+        "tag": "style",
+        "type": "select",
+        "label": "Field Mode",
+        "key": "role",
+        "defaultValue": "formInput",
+        "options": [
+          {
+            "label": "Form Input",
+            "value": "formInput"
+          },
+          {
+            "label": "Inline Input",
+            "value": "inlineInput"
+          }
+        ]
+      },
+      {
+        "tag": "style",
+        "type": "select",
+        "label": "Label Position",
+        "key": "labelPosition",
+        "showInBar": true,
+        "defaultValue": "fieldGroup",
+        "barStyle": "buttons",
+        "options": [
+          {
+            "label": "Disabled",
+            "value": false,
+            "barIcon": "Cancel",
+            "barTitle": "Disabled"
+          },
+          {
+            "label": "Auto",
+            "value": "fieldGroup",
+            "barIcon": "Group",
+            "barTitle": "Field Group"
+          },
+          {
+            "label": "Above",
+            "value": "above",
+            "barIcon": "MarginTop",
+            "barTitle": "Above"
+          },
+          {
+            "label": "Left",
+            "value": "left",
+            "barIcon": "MarginLeft",
+            "barTitle": "Left"
+          }
+        ]
       },
       {
         "tag": "style",
@@ -119,10 +172,10 @@
         "barStyle": "buttons",
         "options": [
           {
-            "label": "1 column",
-            "value": 6,
-            "barIcon": "Stop",
-            "barTitle": "1 column"
+            "label": "3 columns",
+            "value": 2,
+            "barIcon": "ViewColumn",
+            "barTitle": "3 columns"
           },
           {
             "label": "2 columns",
@@ -131,10 +184,16 @@
             "barTitle": "2 columns"
           },
           {
-            "label": "3 columns",
-            "value": 2,
-            "barIcon": "ViewColumn",
-            "barTitle": "3 columns"
+            "label": "1 column",
+            "value": 6,
+            "barIcon": "Stop",
+            "barTitle": "1 column"
+          },
+          {
+            "label": "Full Width",
+            "value": 12,
+            "barIcon": "Maximize",
+            "barTitle": "Full Width"
           }
         ]
       }

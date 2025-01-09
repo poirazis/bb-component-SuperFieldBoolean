@@ -1,21 +1,27 @@
 <script>
   import { getContext, onDestroy } from "svelte";
   import CellBoolean from "../../bb_super_components_shared/src/lib/SuperTableCells/CellBoolean.svelte";
+  import SuperFieldLabel from "../../bb_super_components_shared/src/lib/SuperFieldLabel/SuperFieldLabel.svelte";
   import "../../bb_super_components_shared/src/lib/SuperFieldsCommon.css";
+  import "../../bb_super_components_shared/src/lib/SuperTableCells/CellCommon.css";
 
   const { styleable } = getContext("sdk");
   const component = getContext("component");
 
   const formContext = getContext("form");
   const formStepContext = getContext("form-step");
-  const labelPos = getContext("field-group");
-  const groupDisabled = getContext("field-group-disabled");
+  const groupLabelPosition = getContext("field-group");
   const labelWidth = getContext("field-group-label-width");
+  const groupColumns = getContext("field-group-columns");
+  const groupDisabled = getContext("field-group-disabled");
   const formApi = formContext?.formApi;
 
   export let field;
   export let controlType;
+  export let role = "formInput";
+  export let labelPosition = "fieldGroup";
   export let template;
+  export let helpText;
 
   export let label;
   export let span = 6;
@@ -38,6 +44,10 @@
   let cellState;
 
   $: formStep = formStepContext ? $formStepContext || 1 : 1;
+  $: labelPos =
+    groupLabelPosition && labelPosition == "fieldGroup"
+      ? groupLabelPosition
+      : labelPosition;
 
   $: formField = formApi?.registerField(
     field,
@@ -65,7 +75,7 @@
     icon,
     padding: "0.5rem",
     align: "flex-start",
-    role: "formInput",
+    role,
   };
 
   $: $component.styles = {
@@ -73,8 +83,9 @@
     normal: {
       ...$component.styles.normal,
       "flex-direction": labelPos == "left" ? "row" : "column",
+      "align-items": "stretch",
       gap: labelPos == "left" ? "0.5rem" : "0rem",
-      "grid-column": labelPos ? "span " + span : null,
+      "grid-column": span < 7 ? "span " + span : "span " + groupColumns * 6,
       "--label-width":
         labelPos == "left" ? (labelWidth ? labelWidth : "6rem") : "auto",
     },
@@ -93,26 +104,24 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-<div class="superField" use:styleable={$component.styles}>
-  {#if label}
-    <label for="superCell" class="superlabel" class:left={labelPos == "left"}>
+<div use:styleable={$component.styles}>
+  <div class="superField" class:left-label={labelPos == "left"}>
+    <SuperFieldLabel
+      {labelPos}
+      {labelWidth}
       {label}
-      {#if fieldState.error}
-        <div class="error" class:left={labelPos == "left"}>
-          <span>{fieldState.error}</span>
-        </div>
-      {/if}
-    </label>
-  {/if}
-
-  <div class="inline-cells">
-    <CellBoolean
-      bind:cellState
-      {cellOptions}
-      {value}
-      {fieldSchema}
-      on:change={(e) => handleChange(e.detail)}
-      on:blur={cellState.lostFocus}
+      {helpText}
+      error={fieldState?.error}
     />
+
+    <div class="inline-cells">
+      <CellBoolean
+        bind:cellState
+        {cellOptions}
+        {value}
+        {fieldSchema}
+        on:change={(e) => handleChange(e.detail)}
+      />
+    </div>
   </div>
 </div>
