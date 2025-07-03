@@ -23,13 +23,13 @@
         "type": "field/boolean",
         "label": "Field",
         "key": "field",
-        "defaultValue": "Super Boolean Field"
+        "defaultValue": "Boolean Field"
       },
       {
         "type": "text",
         "label": "Label",
         "key": "label",
-        "defaultValue": "Super Boolean Field"
+        "placeholder": "Field Name"
       },
       {
         "type": "text",
