@@ -2,7 +2,7 @@
   import { getContext, onDestroy } from "svelte";
   import { SuperField, CellBoolean } from "@poirazis/supercomponents-shared";
 
-  const { styleable } = getContext("sdk");
+  const { styleable, builderStore } = getContext("sdk");
   const component = getContext("component");
 
   const formContext = getContext("form");
@@ -23,10 +23,13 @@
   export let label;
   export let span = 6;
 
+  export let showDirty;
+
   export let defaultValue;
   export let disabled;
   export let readonly;
   export let validation;
+  export let invisible = false;
 
   export let icon;
 
@@ -74,14 +77,20 @@
     padding: "0.5rem",
     align: "flex-start",
     role,
+    controlType,
+    showDirty,
   };
 
   $: $component.styles = {
     ...$component.styles,
     normal: {
       ...$component.styles.normal,
-      "grid-column": span < 7 ? "span " + span : "span " + groupColumns * 6,
-      flex: span > 6 ? "auto" : "none",
+      display:
+        invisible && !$builderStore.inBuilder
+          ? "none"
+          : $component.styles.normal.display,
+      opacity: invisible && $builderStore.inBuilder ? 0.6 : 1,
+      "grid-column": groupColumns ? `span ${span}` : "span 1",
     },
   };
 

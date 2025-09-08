@@ -1,6 +1,6 @@
 {
   "name": "bb-component-SuperFieldBoolean",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Boolean Input Field for Budibase",
   "license": "MIT",
   "svelte": "index.js",
