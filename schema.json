@@ -23,12 +23,13 @@
         "type": "field/boolean",
         "label": "Field",
         "key": "field",
-        "required": true
+        "defaultValue": "Boolean Field"
       },
       {
         "type": "text",
         "label": "Label",
-        "key": "label"
+        "key": "label",
+        "placeholder": "Field Name"
       },
       {
         "type": "text",
@@ -45,8 +46,8 @@
         "type": "text",
         "label": "Formatted value",
         "key": "template",
-        "placeholder" : "{{ Value }}",
-        "nested" : true
+        "placeholder": "{{ Value }}",
+        "nested": true
       },
       {
         "type": "validation/boolean",
@@ -98,45 +99,81 @@
         }
       },
       {
-        "type" : "boolean",
-        "key"  : "showIcon",
-        "label": "Add Inline Icon"
+        "type": "boolean",
+        "key": "invisible",
+        "label": "Invisible",
+        "defaultValue": false
       },
       {
-        "type" : "icon",
-        "key"  : "icon",
-        "label": "Icon",
-        "resetOn" : "showIcon",
-        "dependsOn" : "showIcon"
+        "type": "icon",
+        "key": "icon",
+        "label": "Icon"
       },
       {
         "tag": "style",
         "type": "select",
-        "label": "Layout",
-        "key": "span",
-        "defaultValue": 6,
+        "label": "Field Mode",
+        "key": "role",
+        "defaultValue": "formInput",
+        "options": [
+          {
+            "label": "Form Input",
+            "value": "formInput"
+          },
+          {
+            "label": "Inline Input",
+            "value": "inlineInput"
+          }
+        ]
+      },
+      {
+        "tag": "style",
+        "type": "select",
+        "label": "Label Position",
+        "key": "labelPosition",
         "showInBar": true,
+        "defaultValue": "fieldGroup",
         "barStyle": "buttons",
         "options": [
           {
-            "label": "1 column",
-            "value": 6,
-            "barIcon": "Stop",
-            "barTitle": "1 column"
+            "label": "Disabled",
+            "value": false,
+            "barIcon": "Cancel",
+            "barTitle": "Disabled"
           },
           {
-            "label": "2 columns",
-            "value": 3,
-            "barIcon": "ColumnTwoA",
-            "barTitle": "2 columns"
+            "label": "Auto",
+            "value": "fieldGroup",
+            "barIcon": "Group",
+            "barTitle": "Field Group"
           },
           {
-            "label": "3 columns",
-            "value": 2,
-            "barIcon": "ViewColumn",
-            "barTitle": "3 columns"
+            "label": "Above",
+            "value": "above",
+            "barIcon": "MarginTop",
+            "barTitle": "Above"
+          },
+          {
+            "label": "Left",
+            "value": "left",
+            "barIcon": "MarginLeft",
+            "barTitle": "Left"
           }
         ]
+      },
+      {
+        "tag": "style",
+        "type": "number",
+        "label": "Size",
+        "key": "span",
+        "defaultValue": 6,
+        "min": 2
+      },
+      {
+        "tag": "style",
+        "type": "boolean",
+        "label": "Show Dirty",
+        "key": "showDirty"
       }
     ]
   }

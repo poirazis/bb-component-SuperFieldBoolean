@@ -1,42 +1,53 @@
 <script>
-  import { getContext , onDestroy} from "svelte";
-  import CellBoolean from "../../bb_super_components_shared/src/lib/SuperCell/cells/CellBoolean.svelte";
+  import { getContext, onDestroy } from "svelte";
+  import { SuperField, CellBoolean } from "@poirazis/supercomponents-shared";
 
-  const { styleable } = getContext("sdk");
+  const { styleable, builderStore } = getContext("sdk");
   const component = getContext("component");
 
   const formContext = getContext("form");
   const formStepContext = getContext("form-step");
-  const labelPos = getContext("field-group");
+  const groupLabelPosition = getContext("field-group");
   const labelWidth = getContext("field-group-label-width");
+  const groupColumns = getContext("field-group-columns");
+  const groupDisabled = getContext("field-group-disabled");
   const formApi = formContext?.formApi;
 
-  export let field;
-  export let controlType
-  export let template
+  export let field = "Boolean Field";
+  export let controlType;
+  export let role = "formInput";
+  export let labelPosition = "fieldGroup";
+  export let template;
+  export let helpText;
 
   export let label;
   export let span = 6;
 
-  export let defaultValue
-  export let disabled
-  export let readonly
-  export let validation
+  export let showDirty;
 
-  export let icon
+  export let defaultValue;
+  export let disabled;
+  export let readonly;
+  export let validation;
+  export let invisible = false;
 
-  export let onChange
+  export let icon;
+
+  export let onChange;
 
   let formField;
   let formStep;
   let fieldState;
   let fieldApi;
-  let fieldSchema
+  let fieldSchema;
   let value;
-  let cellState
-  
+  let cellState;
 
   $: formStep = formStepContext ? $formStepContext || 1 : 1;
+  $: labelPos =
+    groupLabelPosition && labelPosition == "fieldGroup"
+      ? groupLabelPosition
+      : labelPosition;
 
   $: formField = formApi?.registerField(
     field,
@@ -46,7 +57,7 @@
     readonly,
     validation,
     formStep
-  )
+  );
 
   $: unsubscribe = formField?.subscribe((value) => {
     fieldState = value?.fieldState;
@@ -54,105 +65,56 @@
     fieldSchema = value?.fieldSchema;
   });
 
-  $: value = fieldState?.value
+  $: value = fieldState?.value;
+  $: error = fieldState?.error;
 
-  $: cellOptions = { 
-      defaultValue,
-      disabled,
-      template,
-      readonly: readonly || disabled,
-      icon,
-      align: "flex-start",
-      role: "formInput", 
-    }
-
+  $: cellOptions = {
+    defaultValue,
+    disabled: disabled || groupDisabled || fieldState?.disabled,
+    template,
+    readonly: readonly || fieldState?.readonly,
+    icon,
+    padding: "0.5rem",
+    align: "flex-start",
+    role,
+    controlType,
+    showDirty,
+  };
 
   $: $component.styles = {
     ...$component.styles,
     normal: {
       ...$component.styles.normal,
-      "flex-direction": labelPos == "left" ? "row" : "column",
-      gap: labelPos == "left" ? "0.85rem" : "0rem",
-      "grid-column": labelPos ? "span " + span : null,
-      "--label-width":
-        labelPos == "left" ? (labelWidth ? labelWidth : "6rem") : "auto",
+      display:
+        invisible && !$builderStore.inBuilder
+          ? "none"
+          : $component.styles.normal.display,
+      opacity: invisible && $builderStore.inBuilder ? 0.6 : 1,
+      "grid-column": groupColumns ? `span ${span}` : "span 1",
     },
   };
-  
-  const handleChange = ( newValue ) => {
-    console.log("Setting Value ", newValue)
 
-
-    onChange?.({value: newValue});
+  const handleChange = (newValue) => {
+    onChange?.({ value: newValue });
     fieldApi?.setValue(newValue);
-  }
+  };
 
   onDestroy(() => {
-    fieldApi?.deregister()
-    unsubscribe?.()
-  })
+    fieldApi?.deregister();
+    unsubscribe?.();
+  });
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-<div
-  class="superField"
-  on:focus={cellState.focus} 
-  tabindex="0"
-  use:styleable={$component.styles}  
->
-  <label for="superCell" class="superlabel" class:bound={formContext}>
-    {label}
-  </label>
-  
-  <div class="inline-cells">
+<div use:styleable={$component.styles}>
+  <SuperField {labelPos} {labelWidth} {field} {label} {error} {helpText}>
     <CellBoolean
       bind:cellState
       {cellOptions}
       {value}
       {fieldSchema}
       on:change={(e) => handleChange(e.detail)}
-      on:blur={cellState.lostFocus}
     />
-  </div>
+  </SuperField>
 </div>
-
-<style>
-  .superField {
-    display: flex;
-    align-items: stretch;
-    justify-content: stretch;
-    min-width: 0;
-  }
-
-  .superField:focus {
-    outline: none;
-  }
-  .superlabel {
-    display: flex;
-    align-items: flex-start;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    min-width: var(--label-width);
-    max-width: var(--label-width);
-    font-size: 12px;
-    line-height: 1.75rem;
-    font-weight: 400;
-    color: var(--spectrum-global-color-gray-700);
-  }
-
-  .inline-cells {
-    flex: 1;
-    display: flex;
-    justify-items: stretch;
-    height: 2rem;
-  }
-
-  .superlabel.bound {
-    gap: 0.5rem;
-  }
-</style>
-
-
-
