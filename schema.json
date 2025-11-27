@@ -33,6 +33,11 @@
       },
       {
         "type": "text",
+        "label": "Inline Label",
+        "key": "inlineLabel"
+      },
+      {
+        "type": "text",
         "label": "Default value",
         "key": "defaultValue",
         "supportsConditions": false
@@ -41,13 +46,6 @@
         "type": "text",
         "label": "Help text",
         "key": "helpText"
-      },
-      {
-        "type": "text",
-        "label": "Formatted value",
-        "key": "template",
-        "placeholder": "{{ Value }}",
-        "nested": true
       },
       {
         "type": "validation/boolean",

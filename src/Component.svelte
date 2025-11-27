@@ -2,7 +2,7 @@
   import { getContext, onDestroy } from "svelte";
   import { SuperField, CellBoolean } from "@poirazis/supercomponents-shared";
 
-  const { styleable, builderStore } = getContext("sdk");
+  const { styleable, builderStore, Provider } = getContext("sdk");
   const component = getContext("component");
 
   const formContext = getContext("form");
@@ -21,6 +21,7 @@
   export let helpText;
 
   export let label;
+  export let inlineLabel;
   export let span = 6;
 
   export let showDirty;
@@ -65,7 +66,7 @@
     fieldSchema = value?.fieldSchema;
   });
 
-  $: value = fieldState?.value;
+  $: value = fieldState?.value ?? defaultValue;
   $: error = fieldState?.error;
 
   $: cellOptions = {
@@ -73,12 +74,14 @@
     disabled: disabled || groupDisabled || fieldState?.disabled,
     template,
     readonly: readonly || fieldState?.readonly,
+    debounce: formContext ? false : 10,
     icon,
     padding: "0.5rem",
     align: "flex-start",
     role,
     controlType,
     showDirty,
+    inlineLabel,
   };
 
   $: $component.styles = {
@@ -96,6 +99,7 @@
   };
 
   const handleChange = (newValue) => {
+    value = newValue;
     onChange?.({ value: newValue });
     fieldApi?.setValue(newValue);
   };
@@ -109,6 +113,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <div use:styleable={$component.styles}>
+  <Provider data={{ value }} />
   <SuperField {labelPos} {labelWidth} {field} {label} {error} {helpText}>
     <CellBoolean
       bind:cellState
