@@ -97,32 +97,9 @@
         }
       },
       {
-        "type": "boolean",
-        "key": "invisible",
-        "label": "Invisible",
-        "defaultValue": false
-      },
-      {
-        "type": "icon",
+        "type": "phosphorIcon",
         "key": "icon",
         "label": "Icon"
-      },
-      {
-        "tag": "style",
-        "type": "select",
-        "label": "Field Mode",
-        "key": "role",
-        "defaultValue": "formInput",
-        "options": [
-          {
-            "label": "Form Input",
-            "value": "formInput"
-          },
-          {
-            "label": "Inline Input",
-            "value": "inlineInput"
-          }
-        ]
       },
       {
         "tag": "style",
@@ -161,6 +138,23 @@
       },
       {
         "tag": "style",
+        "type": "select",
+        "label": "Field Mode",
+        "key": "role",
+        "defaultValue": "formInput",
+        "options": [
+          {
+            "label": "Form Input",
+            "value": "formInput"
+          },
+          {
+            "label": "Inline Input",
+            "value": "inlineInput"
+          }
+        ]
+      },
+      {
+        "tag": "style",
         "type": "number",
         "label": "Size",
         "key": "span",
@@ -172,6 +166,13 @@
         "type": "boolean",
         "label": "Show Dirty",
         "key": "showDirty"
+      },
+      {
+        "tag": "style",
+        "type": "boolean",
+        "key": "invisible",
+        "label": "Invisible",
+        "defaultValue": false
       }
     ]
   }
